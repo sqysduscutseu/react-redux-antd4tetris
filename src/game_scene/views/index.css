@@ -1,0 +1,44 @@
+.screen-wrap{
+    position: relative;
+}
+
+.screen{
+    margin: 0px auto;
+    background-color: rgb(152, 163, 185);
+    height: 680px;
+    width: 400px;
+    border: 1px solid sienna;
+}
+
+.shape-wrap{
+    margin: 0 auto;
+    position: relative;
+    /* top: -80px; */
+    height: 80px;
+    width: 80px;
+}
+
+.shape-unit{
+    position: absolute;
+    background-color: red;
+    height: 38px;
+    width: 38px;
+    border: 1px solid black;
+}
+
+.o1{
+    top: 0;
+    left: 0;
+}
+.o2{
+    top: 0;
+    right: 0;
+}
+.o3{
+    bottom: 0;
+    left: 0;
+}
+.o4{
+    bottom: 0;
+    right: 0;
+}
