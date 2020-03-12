@@ -1,14 +1,11 @@
 import React from 'react';
 
 const Shape = (props) => {
-    let {top} = props;
-    console.log(top)
+    let {shape, color, left, bottom} = props;
     return(
-        <div className = 'shape-wrap' style = {{top}}>
-            <div className = 'shape-unit o1'></div>
-            <div className = 'shape-unit o2'></div>
-            <div className = 'shape-unit o3'></div>
-            <div className = 'shape-unit o4'></div>
+        <div className = 'shape-wrap' style = {{left: left*20, bottom: bottom*20}}>
+            {shape && shape.map((unit, index) => <div key = {index} className = 'shape-unit '
+             style = {{left: unit.x*20, bottom: unit.y*20, backgroundColor: color}}>{console.log(shape)}</div>)}
         </div>
     )
 }
