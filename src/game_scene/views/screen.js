@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import './index.css';
 import Shape from './shape';
-import { blockFall, blocksChange, recordBound, changeScreenState } from '../actions';
+import { blockFall, blocksChange, recordBound, changeScreenState, randomNextBlock } from '../actions';
 import { connect } from 'react-redux';
 
 class Screen extends Component {
@@ -169,46 +169,81 @@ class Screen extends Component {
     }
 
     blockTranslation = (e) => {
+        clearInterval(this.timer);
         let {blocks, blockMatrix} = this.props;
         let blockNo = blocks.length - 1;
         let {shape, left, bottom} = blocks[blockNo];
         if(e.keyCode === 37){
             for(let i in shape){
                 if(left === 0 || blockMatrix[shape[i].x + left - 1 ][shape[i].y + bottom]){
+                    this.blockFalling();
                     return;
                 }
             }
             left -= 1;
+            blocks[blockNo] = {...blocks[blockNo], left};
+            this.props.onBlocksChange(blocks);
+            this.blockFalling();
         }else if(e.keyCode === 39){
             for(let i in shape){
                 if(shape[i].x + left === 19 || blockMatrix[shape[i].x + left + 1 ][shape[i].y + bottom]){
+                    this.blockFalling();
                     return;
                 }
             }
             left += 1;
+            blocks[blockNo] = {...blocks[blockNo], left};
+            this.props.onBlocksChange(blocks);
+            this.blockFalling();
         }
-        blocks[blockNo] = {...blocks[blockNo], left};
-        this.props.onBlocksChange(blocks);
     }
 
     blockFalling = () => {
         this.timer = setInterval(() => {
-            let {blocks, blockMatrix} = this.props;
+            let {blocks, blockMatrix, nextBlockNo} = this.props;
             let blockNo = blocks.length - 1;
             let {shape, left, bottom} = blocks[blockNo];
+            if(bottom === 0 || blockMatrix[shape[0].x + left][shape[0].y + bottom - 1]
+                || blockMatrix[shape[1].x + left][shape[1].y + bottom - 1]
+                || blockMatrix[shape[2].x + left][shape[2].y + bottom - 1]
+                || blockMatrix[shape[3].x + left][shape[3].y + bottom - 1]){
+                    for(let j in shape){
+                        blockMatrix[shape[j].x + left][shape[j].y + bottom] = 1;
+                        console.log(shape[j].x + left, shape[j].y + bottom, blockMatrix[shape[j].x + left][shape[j].y + bottom]);
+                    }
+                    this.props.onChangeScreenState(blockMatrix);
+                    let nextBlock = {...this.blockShape[nextBlockNo], left: 9, bottom: 31}
+                    blocks.push(nextBlock);
+                    this.generateNextBlock();
+                }else
+                {
+                    bottom -= 1;
+                    blocks[blockNo] = {...blocks[blockNo], bottom};
+                }
+            /*
             bottom -= 1;
             blocks[blockNo] = {...blocks[blockNo], bottom};
+            
             for(let i in shape){
                 if(shape[i].y + bottom === 0 || blockMatrix[shape[i].x + left][shape[i].y + bottom - 1]){
                     for(let j in shape){
                         blockMatrix[shape[j].x + left][shape[j].y + bottom] = 1;
-                        this.props.onChangeScreenState(blockMatrix);
+                        console.log(shape[j].x + left, shape[j].y + bottom, blockMatrix[shape[j].x + left][shape[j].y + bottom]);
                     }
-                    let nextBlockNo = Math.round(Math.random()*6);
+                    this.props.onChangeScreenState(blockMatrix);
                     let nextBlock = {...this.blockShape[nextBlockNo], left: 9, bottom: 31}
                     blocks.push(nextBlock);
+                    this.generateNextBlock();
+                }else{
+                    if(i === 1){
+                        // bottom -= 1;
+                        // blocks[blockNo] = {...blocks[blockNo], bottom};
+                    }
                 }
             }
+            */
+            
+            
             // for(let i in shape){
             //     if(shape[i].y + bottom === blocksBound[shape[i].x + left]){
             //         for(let j in shape){
@@ -222,8 +257,13 @@ class Screen extends Component {
             //     }
             // }
             this.props.onBlocksChange(blocks);
-        }, 200);
+        }, 100);
         console.log('aaa');
+    }
+
+    generateNextBlock = () => {
+        let nextBlockNo = Math.floor(Math.random()*7);
+        this.props.onRandomNextBlock(nextBlockNo);
     }
 
     render(){
@@ -250,6 +290,7 @@ const mapDispatchToProps = {
     onBlocksChange: blocksChange,
     onRecordBound: recordBound,
     onChangeScreenState: changeScreenState,
+    onRandomNextBlock: randomNextBlock,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Screen);

@@ -5,7 +5,7 @@ const Shape = (props) => {
     return(
         <div className = 'shape-wrap' style = {{left: left*20, bottom: bottom*20}}>
             {shape && shape.map((unit, index) => <div key = {index} className = 'shape-unit '
-             style = {{left: unit.x*20, bottom: unit.y*20, backgroundColor: color}}>{console.log(shape)}</div>)}
+             style = {{left: unit.x*20, bottom: unit.y*20, backgroundColor: color}}></div>)}
         </div>
     )
 }

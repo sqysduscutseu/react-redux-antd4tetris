@@ -1,4 +1,4 @@
-import {BLOCK_FALL, BLOCKS_CHANHE, BLOCKS_BOUND, SCREEN_STATE} from './actionTypes';
+import {BLOCK_FALL, BLOCKS_CHANHE, BLOCKS_BOUND, SCREEN_STATE, NEXT_BLOCK} from './actionTypes';
 
 export const blockFall = () => ({
     type: BLOCK_FALL
@@ -17,4 +17,9 @@ export const recordBound = (blocksBound) => ({
 export const changeScreenState = (blockMatrix) => ({
     type: SCREEN_STATE,
     blockMatrix: blockMatrix
+})
+
+export const randomNextBlock = (nextBlockNo) => ({
+    type: NEXT_BLOCK,
+    nextBlockNo: nextBlockNo
 })
