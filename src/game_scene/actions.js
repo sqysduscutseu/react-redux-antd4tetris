@@ -1,7 +1,8 @@
-import {BLOCK_FALL, BLOCKS_CHANHE, BLOCKS_BOUND, SCREEN_STATE, NEXT_BLOCK} from './actionTypes';
+import {CURRENT_BLOCK, BLOCKS_CHANHE, BLOCKS_PHASE, SCREEN_STATE, NEXT_BLOCK} from './actionTypes';
 
-export const blockFall = () => ({
-    type: BLOCK_FALL
+export const recordBlockNo = (currentBlockNo) => ({
+    type: CURRENT_BLOCK,
+    currentBlockNo: currentBlockNo
 })
 
 export const blocksChange = (blocks) =>({
@@ -9,9 +10,9 @@ export const blocksChange = (blocks) =>({
     blocks: blocks
 })
 
-export const recordBound = (blocksBound) => ({
-    type: BLOCKS_BOUND,
-    blocksBound: blocksBound
+export const recordPhase = (phase) => ({
+    type: BLOCKS_PHASE,
+    phase: phase
 })
 
 export const changeScreenState = (blockMatrix) => ({

@@ -2,160 +2,562 @@ import React, {Component} from 'react';
 
 import './index.css';
 import Shape from './shape';
-import { blockFall, blocksChange, recordBound, changeScreenState, randomNextBlock } from '../actions';
+import { recordBlockNo, blocksChange, recordPhase, changeScreenState, randomNextBlock } from '../actions';
 import { connect } from 'react-redux';
 
 class Screen extends Component {
 
     timer = null;
 
+    randomColor = [
+        'rgb(134,150,160)',
+        'rgb(150,84,84)',
+        'rgb(181,196,177)',
+        'rgb(201,192,211)',
+        'rgb(234,208,209)',
+        'rgb(107,81,82)',
+        'rgb(101,101,101)'
+    ]
+
     blockShape = [
         {
-            shape: [
-                {
-                    x: 0,
-                    y: 0
-                },
-                {
-                    x: 1,
-                    y: 0
-                },
-                {
-                    x: 0,
-                    y: 1
-                },
-                {
-                    x: 1,
-                    y: 1
-                },
+            shapes: [
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: 1,
+                        y: 1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: 1,
+                        y: 1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: 1,
+                        y: 1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: 1,
+                        y: 1
+                    },
+                ]
             ],
-            color: 'yellow'
+            color: 'rgb(134,150,160)'
         },
         {
-            shape: [
-                {
-                    x: 0,
-                    y: 0
-                },
-                {
-                    x: 0,
-                    y: 1
-                },
-                {
-                    x: 0,
-                    y: 2
-                },
-                {
-                    x: 0,
-                    y: 3
-                },
+            shapes: [
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: 0,
+                        y: 2
+                    },
+                    {
+                        x: 0,
+                        y: -1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 2,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: 0
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: -1
+                    },
+                    {
+                        x: 0,
+                        y: -2
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: 0
+                    },
+                    {
+                        x: -2,
+                        y: 0
+                    },
+                ]
             ],
-            color: 'cyan'
+            color: 'rgb(150,84,84)'
         },
         {
-            shape: [
-                {
-                    x: 0,
-                    y: 0
-                },
-                {
-                    x: 1,
-                    y: 0
-                },
-                {
-                    x: 1,
-                    y: 1
-                },
-                {
-                    x: 2,
-                    y: 1
-                },
+            shapes: [
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: 1,
+                        y: 1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: -1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: -1
+                    },
+                    {
+                        x: -1,
+                        y: -1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: -1
+                    },
+                    {
+                        x: -1,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: 1
+                    },
+                ]
             ],
-            color: 'red'
+            color: 'rgb(181,196,177)'
         },
         {
-            shape: [
-                {
-                    x: 0,
-                    y: 1
-                },
-                {
-                    x: 1,
-                    y: 1
-                },
-                {
-                    x: 1,
-                    y: 0
-                },
-                {
-                    x: 2,
-                    y: 0
-                },
+            shapes: [
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: -1,
+                        y: 1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: -1
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: -1
+                    },
+                    {
+                        x: 1,
+                        y: -1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: -1,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: -1
+                    },
+                ]
             ],
-            color: 'green'
+            color: 'rgb(201,192,211)'
         },
         {
-            shape: [
-                {
-                    x: 0,
-                    y: 2
-                },
-                {
-                    x: 0,
-                    y: 1
-                },
-                {
-                    x: 0,
-                    y: 0
-                },
-                {
-                    x: 1,
-                    y: 0
-                },
+            shapes: [
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: 0,
+                        y: -1
+                    },
+                    {
+                        x: 1,
+                        y: -1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: -1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: -1
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: -1,
+                        y: 1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 1
+                    },
+                ]
             ],
-            color: 'orange'
+            color: 'rgb(234,208,209)'
         },
         {
-            shape: [
-                {
-                    x: 0,
-                    y: 0
-                },
-                {
-                    x: 1,
-                    y: 0
-                },
-                {
-                    x: 1,
-                    y: 1
-                },
-                {
-                    x: 1,
-                    y: 2
-                },
+            shapes:[ 
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: 0,
+                        y: -1
+                    },
+                    {
+                        x: -1,
+                        y: -1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: 1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: -1
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: 1,
+                        y: 1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: -1
+                    },
+                ],
             ],
-            color: 'magenta'
+            color: 'rgb(107,81,82)'
         },
         {
-            shape: [
-                {
-                    x: 0,
-                    y: 1
-                },
-                {
-                    x: 1,
-                    y: 1
-                },
-                {
-                    x: 2,
-                    y: 1
-                },
-                {
-                    x: 1,
-                    y: 0
-                },
+            shapes: [
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: -1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: 0,
+                        y: -1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: -1,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                ],
+                [
+                    {
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        x: 1,
+                        y: 0
+                    },
+                    {
+                        x: 0,
+                        y: 1
+                    },
+                    {
+                        x: 0,
+                        y: -1
+                    },
+                ]
             ],
-            color: 'purple'
+            color: 'rgb(101,101,101)'
         }
     
     ]
@@ -170,12 +572,12 @@ class Screen extends Component {
 
     blockTranslation = (e) => {
         clearInterval(this.timer);
-        let {blocks, blockMatrix} = this.props;
+        let {blocks, blockMatrix, phase, currentBlockNo} = this.props;
         let blockNo = blocks.length - 1;
         let {shape, left, bottom} = blocks[blockNo];
         if(e.keyCode === 37){
             for(let i in shape){
-                if(left === 0 || blockMatrix[shape[i].x + left - 1 ][shape[i].y + bottom]){
+                if(shape[i].x + left === 0 || blockMatrix[shape[i].x + left - 1 ][shape[i].y + bottom]){
                     this.blockFalling();
                     return;
                 }
@@ -195,6 +597,37 @@ class Screen extends Component {
             blocks[blockNo] = {...blocks[blockNo], left};
             this.props.onBlocksChange(blocks);
             this.blockFalling();
+        }else if(e.keyCode === 38){
+            if(phase === 3){
+                phase = 0;
+            }
+            else{
+                phase ++;
+            }
+            for(let i in this.blockShape[currentBlockNo].shapes[phase]){
+                if(this.blockShape[currentBlockNo].shapes[phase][i].x + left === 0
+                    || this.blockShape[currentBlockNo].shapes[phase][i].x + left === 19
+                    || this.blockShape[currentBlockNo].shapes[phase][i].x + bottom === 0
+                    || blockMatrix[shape[i].x + left + 1 ][shape[i].y + bottom]){
+                        if(phase === 0){
+                            phase = 3;
+                        }
+                        else{
+                            phase --;
+                        }
+                        this.props.onRecordPhase(phase);
+                        this.blockFalling();
+                        return;
+                }
+            }
+            this.props.onRecordPhase(phase);
+            blocks[blockNo] = {...blocks[blockNo], shape: this.blockShape[currentBlockNo].shapes[phase]};
+            this.props.onBlocksChange(blocks);
+            console.log(currentBlockNo);
+            this.blockFalling();
+        }else if(e.keyCode === 40){
+            // 加速功能待实现
+            this.blockFalling();
         }
     }
 
@@ -203,18 +636,21 @@ class Screen extends Component {
             let {blocks, blockMatrix, nextBlockNo} = this.props;
             let blockNo = blocks.length - 1;
             let {shape, left, bottom} = blocks[blockNo];
-            if(bottom === 0 || blockMatrix[shape[0].x + left][shape[0].y + bottom - 1]
+            if(shape[0].y + bottom === 0 || shape[1].y + bottom === 0 || shape[2].y + bottom === 0 || shape[3].y + bottom === 0
+                || blockMatrix[shape[0].x + left][shape[0].y + bottom - 1]
                 || blockMatrix[shape[1].x + left][shape[1].y + bottom - 1]
                 || blockMatrix[shape[2].x + left][shape[2].y + bottom - 1]
                 || blockMatrix[shape[3].x + left][shape[3].y + bottom - 1]){
                     for(let j in shape){
                         blockMatrix[shape[j].x + left][shape[j].y + bottom] = 1;
-                        console.log(shape[j].x + left, shape[j].y + bottom, blockMatrix[shape[j].x + left][shape[j].y + bottom]);
                     }
+                    let colorNo = Math.floor(Math.random()*7)
                     this.props.onChangeScreenState(blockMatrix);
-                    let nextBlock = {...this.blockShape[nextBlockNo], left: 9, bottom: 31}
+                    let nextBlock = {shape: this.blockShape[nextBlockNo].shapes[0], color: this.randomColor[colorNo], left: 9, bottom: 31}
                     blocks.push(nextBlock);
                     this.generateNextBlock();
+                    this.props.onRecordBlockNo(nextBlockNo);
+                    this.props.onRecordPhase(0);
                 }else
                 {
                     bottom -= 1;
@@ -257,7 +693,7 @@ class Screen extends Component {
             //     }
             // }
             this.props.onBlocksChange(blocks);
-        }, 100);
+        }, 200);
         console.log('aaa');
     }
 
@@ -286,9 +722,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    onBlockFall: blockFall,
+    onRecordBlockNo: recordBlockNo,
     onBlocksChange: blocksChange,
-    onRecordBound: recordBound,
+    onRecordPhase: recordPhase,
     onChangeScreenState: changeScreenState,
     onRandomNextBlock: randomNextBlock,
 }
