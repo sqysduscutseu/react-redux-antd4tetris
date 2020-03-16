@@ -1,13 +1,18 @@
+.game-scene{
+    position: relative;
+    float: right;
+    margin: 50px 0px 30px 50px;
+}
 .screen-wrap{
     position: relative;
 }
 
 .screen{
     position: relative;
-    margin: 20px auto;
+    margin: 0 auto;
     background-color: rgb(236, 236, 234);
-    height: 600px;
-    width: 400px;
+    height: 602px;
+    width: 402px;
     border: 1px solid sienna;
     overflow: hidden;
 }
