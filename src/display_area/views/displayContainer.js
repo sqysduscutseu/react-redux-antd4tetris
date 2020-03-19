@@ -15,15 +15,20 @@ class DisplayContainer extends Component {
 
 
     gameStart = () => {
+        let {blockMatrix} = this.props;
         document.addEventListener('keydown', this.blockTranslation, false);
         this.props.onTriggerButton();
         this.initializeGame();
         this.blockFalling();
+        console.log(blockMatrix)
     }
 
     gameOver = () => {
+        let {blockMatrix} = this.props;
         document.removeEventListener('keydown',this.blockTranslation,false);
         clearInterval(this.timer);
+        console.log('qqq');
+        console.log(blockMatrix);
         this.props.onTriggerVisible();
     }
 
@@ -103,18 +108,22 @@ class DisplayContainer extends Component {
             let {blocks, blockMatrix, nextBlockNo} = this.props;
             let blockNo = blocks.length - 1;
             let {shape, left, bottom} = blocks[blockNo];
+            let matrixTop = [];
             for(let i = 1; i < 21; i++ ){
-                if(blockMatrix[i][31] === 1){
-                    this.gameOver();
-                    break;
-                }
+                matrixTop[i-1] = blockMatrix[i][31];
             };
+            if(matrixTop.indexOf(1) !== -1){
+                this.gameOver();
+                return;
+            }
             if(blockMatrix[shape[0].x + left + 1][shape[0].y + bottom + 1 - 1]
                 || blockMatrix[shape[1].x + left + 1][shape[1].y + bottom + 1 - 1]
                 || blockMatrix[shape[2].x + left + 1][shape[2].y + bottom + 1 - 1]
                 || blockMatrix[shape[3].x + left + 1][shape[3].y + bottom + 1 - 1]){
                     for(let j in shape){
-                        blockMatrix[shape[j].x + left + 1][shape[j].y + bottom + 1] = 1;
+                        if(shape[j].y + bottom + 1 < 32){
+                            blockMatrix[shape[j].x + left + 1][shape[j].y + bottom + 1] = 1;
+                        }
                     }
                     this.props.onChangeScreenState(blockMatrix);
                     let nextBlock = createBlock(nextBlockNo);

@@ -602,6 +602,9 @@ export const initialBlockMatrix = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0]    
 ];
 
+export const matrixBoundRow = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0];
+export const matrixInnerRow = [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
 export const initialPhase = 0;
 export const initialCurrentBlockNo = 0;
 export const initialNextBlockNo = 7;
